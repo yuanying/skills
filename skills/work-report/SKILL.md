@@ -98,17 +98,26 @@ echo "日時: $(date '+%Y-%m-%d %H:%M:%S %Z')"
 
 ### 4. レポートの保存
 
-レポートを以下のファイル名で現在の作業ディレクトリに保存します：
+保存先は LLM-wiki の memos ディレクトリです：
 
+```bash
+WIKI_DIR="${HOME}/src/github.com/yuanying/llm-wiki"
+YEAR=$(date '+%Y')
+MONTH=$(date '+%m')
+SAVE_DIR="${WIKI_DIR}/raw/memos/${YEAR}/${MONTH}"
 ```
-${hostname}-work-report-YYYYMMDD-HHMMSS.md
-```
 
-保存後、ファイルパスをユーザーに伝えます。
+手順：
+1. `${WIKI_DIR}` が存在するか確認する
+2. `${WIKI_DIR}` が存在しない場合はユーザーに保存先を確認する
+3. `${WIKI_DIR}` が存在する場合は `mkdir -p ${SAVE_DIR}` で保存先を作成して保存する
 
-ファイル名の生成例：
+ファイル名：
 ```bash
 HOSTNAME=$(hostname)
 DATE=$(date '+%Y%m%d-%H%M%S')
 FILENAME="${HOSTNAME}-work-report-${DATE}.md"
+# 保存先: ${SAVE_DIR}/${FILENAME}
 ```
+
+保存後、ファイルのフルパスをユーザーに伝えます。
