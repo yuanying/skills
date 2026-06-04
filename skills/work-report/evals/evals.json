@@ -1,0 +1,119 @@
+{
+  "skill_name": "work-report",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Nginxのインストールと設定が完了しました。/etc/nginx/nginx.conf を編集してリバースプロキシを設定し、途中で permission denied エラーが出て sudo を使って解決しました。作業レポートを作成してください。",
+      "expected_output": "環境情報（ホスト名、OS、ユーザー、ディレクトリ）、作業概要（Nginxインストールとリバースプロキシ設定）、インストールしたパッケージ（nginx）、変更したファイル（/etc/nginx/nginx.conf）、ハマった点（permission deniedエラーとsudoでの解決）を含むMarkdownレポートが生成され、ファイルとして保存される",
+      "files": [],
+      "assertions": [
+        {
+          "name": "has_environment_section",
+          "description": "レポートに環境情報セクションが含まれ、ホスト名またはOSの情報がある",
+          "type": "contains_any",
+          "patterns": ["環境情報", "ホスト名", "hostname", "OS"]
+        },
+        {
+          "name": "mentions_nginx",
+          "description": "nginxのインストールまたは設定への言及がある",
+          "type": "contains_any",
+          "patterns": ["nginx", "Nginx", "NGINX"]
+        },
+        {
+          "name": "has_troubleshooting_section",
+          "description": "ハマった点または問題セクションがある",
+          "type": "contains_any",
+          "patterns": ["ハマった", "問題", "エラー", "トラブル", "issue"]
+        },
+        {
+          "name": "mentions_permission_denied",
+          "description": "permission denied エラーへの言及がある",
+          "type": "contains_any",
+          "patterns": ["permission denied", "Permission denied", "パーミッション"]
+        },
+        {
+          "name": "mentions_sudo_solution",
+          "description": "sudo による解決策が記述されている",
+          "type": "contains_any",
+          "patterns": ["sudo", "スーパーユーザー", "root"]
+        },
+        {
+          "name": "saved_as_markdown_file",
+          "description": "Markdownファイルとして保存されている",
+          "type": "file_exists",
+          "pattern": "work-report*.md"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "今日はPythonの仮想環境を作成してDjangoをインストールし、データベースのマイグレーションを実行しました。特に問題はありませんでした。今日の作業をまとめてください。",
+      "expected_output": "環境情報、作業概要（Python仮想環境+Djangoセットアップ）、インストールしたパッケージ（django等）、DBマイグレーション実行を含むレポートが生成される。ハマった点のセクションは問題がなかったので省略されるか「なし」と記載される",
+      "files": [],
+      "assertions": [
+        {
+          "name": "has_environment_section",
+          "description": "レポートに環境情報セクションが含まれる",
+          "type": "contains_any",
+          "patterns": ["環境情報", "ホスト名", "hostname", "OS"]
+        },
+        {
+          "name": "mentions_venv_and_django",
+          "description": "仮想環境とDjangoへの言及がある",
+          "type": "contains_all",
+          "patterns": ["Django", "仮想環境"]
+        },
+        {
+          "name": "mentions_migration",
+          "description": "マイグレーション実行への言及がある",
+          "type": "contains_any",
+          "patterns": ["migrate", "マイグレーション", "migration"]
+        },
+        {
+          "name": "saved_as_markdown_file",
+          "description": "Markdownファイルとして保存されている",
+          "type": "file_exists",
+          "pattern": "work-report*.md"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Dockerコンテナのデバッグ作業が終わりました。コンテナが起動しない問題で、ログを確認したら port already in use エラーでした。既存のプロセスを kill して解決しました。作業報告書を作って。",
+      "expected_output": "環境情報、Dockerデバッグの概要、ハマった点（port already in use エラー）と解決策（既存プロセスのkill）が明記されたレポートが生成される",
+      "files": [],
+      "assertions": [
+        {
+          "name": "has_environment_section",
+          "description": "レポートに環境情報セクションが含まれる",
+          "type": "contains_any",
+          "patterns": ["環境情報", "ホスト名", "hostname", "OS"]
+        },
+        {
+          "name": "mentions_port_error",
+          "description": "port already in use エラーへの言及がある",
+          "type": "contains_any",
+          "patterns": ["port already in use", "ポート", "port"]
+        },
+        {
+          "name": "mentions_kill_solution",
+          "description": "プロセスkillによる解決策が記述されている",
+          "type": "contains_any",
+          "patterns": ["kill", "プロセス終了", "停止"]
+        },
+        {
+          "name": "has_troubleshooting_section",
+          "description": "ハマった点と解決策セクションがある",
+          "type": "contains_any",
+          "patterns": ["ハマった", "問題", "エラー", "トラブル", "解決"]
+        },
+        {
+          "name": "saved_as_markdown_file",
+          "description": "Markdownファイルとして保存されている",
+          "type": "file_exists",
+          "pattern": "work-report*.md"
+        }
+      ]
+    }
+  ]
+}
