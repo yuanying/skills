@@ -1,0 +1,125 @@
+{
+  "skill_name": "anima-prompt",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "初音ミクの立ち絵プロンプトを作って。全身、笑顔、ステージ背景、アスペクト比9:16で。",
+      "expected_output": "Animaのタグ順序に従い、quality_meta_year_safeから始まり、count=1girl、キャラクター名・外見・アーティスト・タグ・環境を含むJSON形式のプロンプトとプレーンテキストを出力する",
+      "files": [],
+      "assertions": [
+        {
+          "name": "has_quality_tags",
+          "description": "クオリティタグが含まれる",
+          "type": "contains_any",
+          "patterns": ["masterpiece", "best quality", "score_9"]
+        },
+        {
+          "name": "has_count",
+          "description": "人数タグが含まれる",
+          "type": "contains_any",
+          "patterns": ["1girl"]
+        },
+        {
+          "name": "has_character",
+          "description": "キャラクター名が含まれる",
+          "type": "contains_any",
+          "patterns": ["hatsune miku", "初音ミク", "miku"]
+        },
+        {
+          "name": "has_safe_tag",
+          "description": "安全タグが含まれる",
+          "type": "contains_any",
+          "patterns": ["safe", "sensitive", "nsfw", "explicit"]
+        },
+        {
+          "name": "has_aspect_ratio",
+          "description": "アスペクト比が含まれる",
+          "type": "contains_any",
+          "patterns": ["9:16", "aspect_ratio"]
+        },
+        {
+          "name": "has_negative",
+          "description": "ネガティブプロンプトが含まれる",
+          "type": "contains_any",
+          "patterns": ["worst quality", "score_1", "neg"]
+        },
+        {
+          "name": "has_json_output",
+          "description": "JSON形式の出力が含まれる",
+          "type": "contains_any",
+          "patterns": ["{", "quality_meta_year_safe", "\"count\""]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "初音ミクと鏡音リンの2人プロンプトを作りたい。横並びで微笑んでいるシーン、アスペクト比16:9。",
+      "expected_output": "2人用の構成でcount=2girls、各キャラクターの外見を分けて記述し、位置タグ(on the left/on the right)を含み、ネガティブにduplicate/twins/cloneを追加したプロンプトを出力する",
+      "files": [],
+      "assertions": [
+        {
+          "name": "has_2girls",
+          "description": "2人の人数タグが含まれる",
+          "type": "contains_any",
+          "patterns": ["2girls"]
+        },
+        {
+          "name": "has_both_characters",
+          "description": "両キャラクター名が含まれる",
+          "type": "contains_all",
+          "patterns": ["miku", "rin"]
+        },
+        {
+          "name": "has_position_tags",
+          "description": "位置指定タグが含まれる",
+          "type": "contains_any",
+          "patterns": ["on the left", "on the right", "side by side", "left", "right"]
+        },
+        {
+          "name": "has_duplicate_prevention",
+          "description": "複製防止タグがネガティブに含まれる",
+          "type": "contains_any",
+          "patterns": ["duplicate", "twins", "clone"]
+        },
+        {
+          "name": "has_aspect_ratio",
+          "description": "アスペクト比が含まれる",
+          "type": "contains_any",
+          "patterns": ["16:9", "aspect_ratio"]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "オリジナルキャラ、黒髪ロング、赤い目、制服姿、@fkeyスタイルで。",
+      "expected_output": "キャラ名なし・外見説明ありの構成で、@fkeyアーティストタグを含み、制服(school uniform等)をtagsに入れたプロンプトを出力する",
+      "files": [],
+      "assertions": [
+        {
+          "name": "has_artist_at",
+          "description": "@付きアーティストタグが含まれる",
+          "type": "contains_any",
+          "patterns": ["@fkey"]
+        },
+        {
+          "name": "has_appearance",
+          "description": "外見説明が含まれる",
+          "type": "contains_any",
+          "patterns": ["black hair", "long hair", "red eyes"]
+        },
+        {
+          "name": "has_uniform",
+          "description": "制服タグが含まれる",
+          "type": "contains_any",
+          "patterns": ["school uniform", "uniform", "制服"]
+        },
+        {
+          "name": "no_artist_without_at",
+          "description": "アーティスト名に@が付いている",
+          "type": "contains_any",
+          "patterns": ["@fkey"]
+        }
+      ]
+    }
+  ]
+}
