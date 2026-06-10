@@ -1,0 +1,83 @@
+{
+  "skill_name": "sd-generate",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "夕暮れの富士山の画像を生成してください。",
+      "expected_output": "txt2img インテントを判定し、プロンプト（Mount Fuji at sunset 相当）でパラメータを確認しながら sdctl txt2img コマンドを実行し、生成された画像のパスを報告する",
+      "files": [],
+      "assertions": [
+        {
+          "name": "uses_txt2img",
+          "description": "txt2img コマンドを使用する",
+          "type": "contains_any",
+          "patterns": ["txt2img", "sdctl txt2img"]
+        },
+        {
+          "name": "mentions_fuji_prompt",
+          "description": "富士山に関するプロンプトが含まれる",
+          "type": "contains_any",
+          "patterns": ["Fuji", "fuji", "富士山", "sunset", "夕暮れ"]
+        },
+        {
+          "name": "requests_parameters",
+          "description": "パラメータ（サイズ・ステップ数など）を確認するか、デフォルト値を使用する",
+          "type": "contains_any",
+          "patterns": ["512", "width", "steps", "ステップ", "サイズ", "output"]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "この画像 ./photo.jpg を水彩画風に変換してください。",
+      "expected_output": "img2img インテントを判定し、入力画像パス（./photo.jpg）とデノイジング強度を確認しながら sdctl img2img コマンドを実行し、変換後の画像パスを報告する",
+      "files": [],
+      "assertions": [
+        {
+          "name": "uses_img2img",
+          "description": "img2img コマンドを使用する",
+          "type": "contains_any",
+          "patterns": ["img2img", "sdctl img2img"]
+        },
+        {
+          "name": "mentions_input_image",
+          "description": "入力画像パスへの言及がある",
+          "type": "contains_any",
+          "patterns": ["photo.jpg", "./photo.jpg"]
+        },
+        {
+          "name": "mentions_watercolor",
+          "description": "水彩風に関するプロンプトが含まれる",
+          "type": "contains_any",
+          "patterns": ["watercolor", "水彩", "watercolour"]
+        },
+        {
+          "name": "mentions_denoising",
+          "description": "デノイジング強度を言及または使用する",
+          "type": "contains_any",
+          "patterns": ["denoising", "デノイジング", "0.75", "0."]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "利用可能なStable Diffusionのモデルを一覧表示してください。",
+      "expected_output": "models インテントを判定し、sdctl models list を実行してモデル一覧を表示する",
+      "files": [],
+      "assertions": [
+        {
+          "name": "uses_models_list",
+          "description": "sdctl models list コマンドを使用する",
+          "type": "contains_any",
+          "patterns": ["models list", "sdctl models"]
+        },
+        {
+          "name": "shows_model_list",
+          "description": "モデル一覧の表示や実行結果への言及がある",
+          "type": "contains_any",
+          "patterns": ["モデル", "model", "一覧", "list"]
+        }
+      ]
+    }
+  ]
+}
