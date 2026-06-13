@@ -4,7 +4,7 @@
     {
       "id": 1,
       "prompt": "Nginxのインストールと設定が完了しました。/etc/nginx/nginx.conf を編集してリバースプロキシを設定し、途中で permission denied エラーが出て sudo を使って解決しました。作業レポートを作成してください。",
-      "expected_output": "環境情報（ホスト名、OS、ユーザー、ディレクトリ）、作業概要（Nginxインストールとリバースプロキシ設定）、インストールしたパッケージ（nginx）、変更したファイル（/etc/nginx/nginx.conf）、ハマった点（permission deniedエラーとsudoでの解決）を含むMarkdownレポートが生成され、ファイルとして保存される",
+      "expected_output": "環境情報（ホスト名、OS、ユーザー、ディレクトリ）、対象コンテキスト（リポジトリ、プロジェクト、ブランチ、コミット等）、作業概要（Nginxインストールとリバースプロキシ設定）、インストールしたパッケージ（nginx）、変更したファイル（/etc/nginx/nginx.conf）、ハマった点（permission deniedエラーとsudoでの解決）を含むMarkdownレポートが生成され、ファイルとして保存される",
       "files": [],
       "assertions": [
         {
@@ -12,6 +12,12 @@
           "description": "レポートに環境情報セクションが含まれ、ホスト名またはOSの情報がある",
           "type": "contains_any",
           "patterns": ["環境情報", "ホスト名", "hostname", "OS"]
+        },
+        {
+          "name": "has_target_context_section",
+          "description": "レポートに対象コンテキストが含まれる",
+          "type": "contains_all",
+          "patterns": ["対象コンテキスト", "リポジトリ", "プロジェクト"]
         },
         {
           "name": "mentions_nginx",
@@ -48,7 +54,7 @@
     {
       "id": 2,
       "prompt": "今日はPythonの仮想環境を作成してDjangoをインストールし、データベースのマイグレーションを実行しました。特に問題はありませんでした。今日の作業をまとめてください。",
-      "expected_output": "環境情報、作業概要（Python仮想環境+Djangoセットアップ）、インストールしたパッケージ（django等）、DBマイグレーション実行を含むレポートが生成される。ハマった点のセクションは問題がなかったので省略されるか「なし」と記載される",
+      "expected_output": "環境情報、対象コンテキスト（リポジトリ、プロジェクト、ブランチ、コミット等）、作業概要（Python仮想環境+Djangoセットアップ）、インストールしたパッケージ（django等）、DBマイグレーション実行を含むレポートが生成される。ハマった点のセクションは問題がなかったので省略されるか「なし」と記載される",
       "files": [],
       "assertions": [
         {
@@ -56,6 +62,12 @@
           "description": "レポートに環境情報セクションが含まれる",
           "type": "contains_any",
           "patterns": ["環境情報", "ホスト名", "hostname", "OS"]
+        },
+        {
+          "name": "has_target_context_section",
+          "description": "レポートに対象コンテキストが含まれる",
+          "type": "contains_all",
+          "patterns": ["対象コンテキスト", "リポジトリ", "プロジェクト"]
         },
         {
           "name": "mentions_venv_and_django",
@@ -80,7 +92,7 @@
     {
       "id": 3,
       "prompt": "Dockerコンテナのデバッグ作業が終わりました。コンテナが起動しない問題で、ログを確認したら port already in use エラーでした。既存のプロセスを kill して解決しました。作業報告書を作って。",
-      "expected_output": "環境情報、Dockerデバッグの概要、ハマった点（port already in use エラー）と解決策（既存プロセスのkill）が明記されたレポートが生成される",
+      "expected_output": "環境情報、対象コンテキスト（リポジトリ、プロジェクト、ブランチ、コミット等）、Dockerデバッグの概要、ハマった点（port already in use エラー）と解決策（既存プロセスのkill）が明記されたレポートが生成される",
       "files": [],
       "assertions": [
         {
@@ -88,6 +100,12 @@
           "description": "レポートに環境情報セクションが含まれる",
           "type": "contains_any",
           "patterns": ["環境情報", "ホスト名", "hostname", "OS"]
+        },
+        {
+          "name": "has_target_context_section",
+          "description": "レポートに対象コンテキストが含まれる",
+          "type": "contains_all",
+          "patterns": ["対象コンテキスト", "リポジトリ", "プロジェクト"]
         },
         {
           "name": "mentions_port_error",
@@ -106,6 +124,44 @@
           "description": "ハマった点と解決策セクションがある",
           "type": "contains_any",
           "patterns": ["ハマった", "問題", "エラー", "トラブル", "解決"]
+        },
+        {
+          "name": "saved_as_markdown_file",
+          "description": "Markdownファイルとして保存されている",
+          "type": "file_exists",
+          "pattern": "work-report*.md"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "skills リポジトリの work-report スキルで、どこのレポジトリの何のプロジェクトの作業だったかがレポートから抜ける問題を修正しました。作業まとめを作ってください。",
+      "expected_output": "環境情報と対象コンテキストを含み、skills リポジトリまたは work-report プロジェクトへの言及、対象ブランチや最新コミットなどのGit情報、作業概要としてwork-reportスキルのコンテキスト欠落防止を記録したMarkdownレポートが生成される",
+      "files": [],
+      "assertions": [
+        {
+          "name": "has_target_context_section",
+          "description": "レポートに対象コンテキストセクションが含まれる",
+          "type": "contains_all",
+          "patterns": ["対象コンテキスト", "リポジトリ", "プロジェクト"]
+        },
+        {
+          "name": "mentions_repository_or_project",
+          "description": "対象リポジトリまたはプロジェクトへの言及がある",
+          "type": "contains_any",
+          "patterns": ["skills", "work-report"]
+        },
+        {
+          "name": "mentions_git_context",
+          "description": "ブランチ、コミット、リモートなどGit由来の文脈が含まれる",
+          "type": "contains_any",
+          "patterns": ["ブランチ", "コミット", "リモート", "branch", "commit", "remote"]
+        },
+        {
+          "name": "mentions_context_fix",
+          "description": "コンテキスト欠落防止の作業に言及している",
+          "type": "contains_any",
+          "patterns": ["コンテキスト", "レポジトリ", "プロジェクト"]
         },
         {
           "name": "saved_as_markdown_file",

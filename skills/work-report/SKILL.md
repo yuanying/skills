@@ -22,6 +22,26 @@ echo "作業ディレクトリ: $(pwd)"
 echo "日時: $(date '+%Y-%m-%d %H:%M:%S %Z')"
 ```
 
+続けて、レポート対象のコンテキストを必ず収集します。`pwd` は実行場所であり、実際の作業対象と一致しない場合があるため、Git情報と会話履歴の両方を確認してください。
+
+```bash
+echo "=== 対象コンテキスト ==="
+git rev-parse --show-toplevel 2>/dev/null || true
+git remote get-url origin 2>/dev/null || true
+git branch --show-current 2>/dev/null || true
+git log -1 --oneline 2>/dev/null || true
+```
+
+収集・判定する項目：
+- Git top-level path（`git rev-parse --show-toplevel`）
+- リポジトリ名（top-level ディレクトリ名、または remote URL 由来の名前）
+- remote URL（`git remote get-url origin`）
+- current branch（`git branch --show-current`）
+- latest commit（`git log -1 --oneline`）
+- プロジェクト名（`package.json` / `pyproject.toml` / `Cargo.toml` / `go.mod` / `README.md` などから判定。判定できなければリポジトリ名）
+
+Gitリポジトリ外、remoteなし、プロジェクト名不明などにより対象コンテキストを自動判定できない場合は、推定で保存せず、保存前にユーザーへ確認してください。確認が必要な場合は、不明な項目と候補を短く示します。
+
 必要に応じて追加情報も収集します：
 - インストール済みパッケージの確認（`dpkg -l`, `pip list`, `npm list` など）
 - Gitリポジトリの状態（`git log --oneline -10`, `git status`）
@@ -34,6 +54,8 @@ echo "日時: $(date '+%Y-%m-%d %H:%M:%S %Z')"
 **作業概要**
 - セッションの目的・背景
 - 達成したこと
+- 対象プロジェクト名、対象リポジトリ、作業対象ディレクトリ
+- 関連するIssue番号、PR番号、チケット番号
 
 **インストール・設定変更**
 - インストールしたパッケージ・ツール（コマンドと結果）
@@ -64,6 +86,17 @@ echo "日時: $(date '+%Y-%m-%d %H:%M:%S %Z')"
 | OS | ... |
 | ユーザー | ... |
 | 作業ディレクトリ | ... |
+
+## 対象コンテキスト
+
+| 項目 | 値 |
+|------|-----|
+| リポジトリ | ... |
+| プロジェクト | ... |
+| Git top-level | ... |
+| ブランチ | ... |
+| 最新コミット | ... |
+| リモート | ... |
 
 ## 作業概要
 
@@ -129,6 +162,17 @@ FILEPATH="${SAVE_DIR}/${FILENAME}"
   ---
 
   ## 追記 - HH:MM
+
+  ### 対象コンテキスト
+
+  | 項目 | 値 |
+  |------|-----|
+  | リポジトリ | ... |
+  | プロジェクト | ... |
+  | Git top-level | ... |
+  | ブランチ | ... |
+  | 最新コミット | ... |
+  | リモート | ... |
 
   ### 作業概要
 
