@@ -8,6 +8,12 @@
 npx skills install github:yuanying/skills
 ```
 
+ローカルのこのリポジトリから `~/.agents/skills` と `~/.claude/skills` にシンボリックリンクでインストールする場合:
+
+```bash
+./scripts/install-skills.sh
+```
+
 ## スキル一覧
 
 | スキル | 説明 |
