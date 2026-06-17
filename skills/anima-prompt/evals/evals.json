@@ -33,21 +33,27 @@
         },
         {
           "name": "has_aspect_ratio",
-          "description": "アスペクト比が含まれる",
-          "type": "contains_any",
-          "patterns": ["9:16", "aspect_ratio"]
+          "description": "アスペクト比に対応する width/height が含まれる",
+          "type": "contains_all",
+          "patterns": ["768", "1344"]
         },
         {
           "name": "has_negative",
           "description": "ネガティブプロンプトが含まれる",
           "type": "contains_any",
-          "patterns": ["worst quality", "score_1", "neg"]
+          "patterns": ["worst quality", "score_1", "negative_prompt"]
         },
         {
-          "name": "has_json_output",
-          "description": "JSON形式の出力が含まれる",
+          "name": "has_prompt_yaml",
+          "description": "prompt.yaml 形式の出力が含まれる",
           "type": "contains_any",
-          "patterns": ["{", "quality_meta_year_safe", "\"count\""]
+          "patterns": ["prompt: |", "prompt.yaml"]
+        },
+        {
+          "name": "has_sdctl_command",
+          "description": "sdctl コマンドが含まれる",
+          "type": "contains_any",
+          "patterns": ["sdctl txt2img", "--steps", "--cfg-scale"]
         }
       ]
     },
@@ -83,9 +89,9 @@
         },
         {
           "name": "has_aspect_ratio",
-          "description": "アスペクト比が含まれる",
-          "type": "contains_any",
-          "patterns": ["16:9", "aspect_ratio"]
+          "description": "アスペクト比に対応する width/height が含まれる",
+          "type": "contains_all",
+          "patterns": ["1344", "768"]
         }
       ]
     },
