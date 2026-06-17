@@ -83,6 +83,18 @@ $ARGUMENTS
 - `16:9`（横型・シーン向け）
 - `3:2`, `4:3`, `16:10`, `21:9` など
 
+アスペクト比 → width/height マッピング:
+
+| アスペクト比 | width | height |
+|-------------|-------|--------|
+| 1:1         | 1024  | 1024   |
+| 9:16        | 768   | 1344   |
+| 16:9        | 1344  | 768    |
+| 3:4         | 768   | 1024   |
+| 4:3         | 1024  | 768    |
+| 3:2         | 1152  | 768    |
+| 2:3         | 768   | 1152   |
+
 ---
 
 ## フェーズ2: プロンプト組み立て
@@ -133,46 +145,61 @@ worst quality, low quality, score_1, score_2, score_3, blurry, jpeg artifacts, b
 
 ## フェーズ3: 出力
 
-### 出力1: ComfyUI 用 JSON
+### 出力1: prompt.yaml
 
-```json
-{
-  "aspect_ratio": "<ratio>",
-  "quality_meta_year_safe": "<quality tags>",
-  "count": "<count>",
-  "character": "<character block>",
-  "series": "<series if single char>",
-  "appearance": "<appearance if single char>",
-  "artist": "<@artist or empty>",
-  "style": "<style tags or empty>",
-  "tags": "<action, composition, clothing, expression, camera>",
-  "environment": "<background, lighting or empty>",
-  "nltags": "",
-  "neg": "<negative prompt>"
-}
+意味単位ごとに改行し、キャラクターブロック内のサブ要素（外見・服装）はインデントする。
+
+**1人の場合:**
+```yaml
+prompt: |
+  masterpiece, best quality, score_9, score_8, score_7, highres, newest, year 2025, <safe_tag>,
+  <count>,
+  <character_name> (<series>),
+    <appearance>,
+    <clothing>,
+  <@artist>,
+  <style_tags>,
+  <action, composition, expression, camera>,
+  <environment, lighting>
+negative_prompt: "<negative prompt>"
 ```
 
-2人の場合は `character` フィールドに2人分を含め、`appearance` は空にする。
-
-### 出力2: プレーンテキストプロンプト
-
-ComfyUI の CLIPTextEncode に貼れる形式でも出力する:
-
-**ポジティブ:**
+**2人の場合:**
+```yaml
+prompt: |
+  masterpiece, best quality, score_9, score_8, score_7, highres, newest, year 2025, <safe_tag>,
+  <count>,
+  <character1_name> (<series1>),
+    <appearance1>,
+  <character2_name> (<series2>),
+    <appearance2>,
+  <@artist>,
+  <style_tags>,
+  <action, position_tags>,
+  <environment, lighting>
+negative_prompt: "<negative prompt>"
 ```
-<quality_meta_year_safe>, <count>, <character+appearance>, <artist>, <style>, <tags>, <environment>
+
+各グループのルール:
+- quality/meta/year/safe → 1行目
+- count → 2行目
+- キャラクター名+シリーズ → 1行、外見・服装はその下にインデント（2スペース）
+- アーティスト → 1行（空の場合は省略）
+- スタイル → 1行（空の場合は省略）
+- アクション・構図 → 1行
+- 環境・ライティング → 1行（空の場合は省略）
+
+### 出力2: sdctl コマンド
+
+アスペクト比から width/height を決定し、Anima 推奨パラメータでコマンドを生成する:
+
+```bash
+sdctl txt2img --prompt prompt.yaml \
+  --width <w> --height <h> \
+  --steps 30 \
+  --cfg-scale 4.5 \
+  --sampler "er_sde" \
+  --scheduler "simple"
 ```
 
-**ネガティブ:**
-```
-<neg>
-```
-
-### 出力3: 推奨パラメータ
-
-| パラメータ | 推奨値 |
-|-----------|--------|
-| Steps | 30 |
-| CFG | 4.5 |
-| Sampler | er_sde |
-| Scheduler | simple |
+`params.yaml` がある場合は `--params params.yaml` を追加するよう案内する。
