@@ -16,11 +16,26 @@ if [[ ! -d "${skills_dir}" ]]; then
 fi
 
 skill_paths=()
-for skill_path in "${skills_dir}"/*; do
-  [[ -d "${skill_path}" ]] || continue
-  [[ -f "${skill_path}/SKILL.md" ]] || continue
-  skill_paths+=("${skill_path}")
-done
+if [[ $# -gt 0 ]]; then
+  for arg in "$@"; do
+    skill_path="${repo_root}/${arg}"
+    if [[ ! -d "${skill_path}" ]]; then
+      echo "skill directory not found: ${skill_path}" >&2
+      exit 1
+    fi
+    if [[ ! -f "${skill_path}/SKILL.md" ]]; then
+      echo "SKILL.md not found in: ${skill_path}" >&2
+      exit 1
+    fi
+    skill_paths+=("${skill_path}")
+  done
+else
+  for skill_path in "${skills_dir}"/*; do
+    [[ -d "${skill_path}" ]] || continue
+    [[ -f "${skill_path}/SKILL.md" ]] || continue
+    skill_paths+=("${skill_path}")
+  done
+fi
 
 if [[ ${#skill_paths[@]} -eq 0 ]]; then
   echo "no skills found in ${skills_dir}" >&2
