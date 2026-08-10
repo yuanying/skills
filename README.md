@@ -27,6 +27,7 @@ npx skills install github:yuanying/skills
 | [work-report](skills/work-report/SKILL.md) | 作業セッション後のレポート自動生成 |
 | [grill-me](skills/grill-me/SKILL.md) | 設計の意思決定を1問ずつ引き出す |
 | [adr-manager](skills/adr-manager/SKILL.md) | 設計決定を ADR として `docs/adr/` に永続化 |
+| [hunk-review](skills/hunk-review/SKILL.md) | hunk を使ったコードレビュー |
 
 ## grill-me + adr-manager ワークフロー
 
