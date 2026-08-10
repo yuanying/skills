@@ -23,8 +23,9 @@ gh pr view
 
 以下のコマンドで PR のURLとブランチ名を取得します：
 
-bash
+```bash
 gh pr view $ARGUMENTS --json url,headRefName
+```
 
 PRのURL `https://HOST/OWNER/REPO/pull/NUMBER` から以下を抽出して使用：
 - `HOSTNAME`: ホスト名
@@ -41,14 +42,16 @@ PRのURL `https://HOST/OWNER/REPO/pull/NUMBER` から以下を抽出して使用
 ### 2. コメント取得
 
 Issue Comments（PR全体へのコメント）:
-bash
+```bash
 gh api --hostname HOSTNAME \
   repos/OWNER/REPO/issues/NUMBER/comments --jq '.[] | {id, user: .user.login, created_at, body}'
+```
 
 Review Comments（コード行へのコメント）:
-bash
+```bash
 gh api --hostname HOSTNAME \
   repos/OWNER/REPO/pulls/NUMBER/comments --jq '.[] | {id, user: .user.login, path, line, created_at, body, in_reply_to_id}'
+```
 
 ### 3. コメント内容の確認と適用
 
@@ -59,10 +62,11 @@ gh api --hostname HOSTNAME \
   - コミットはレビューに関連する元のコミットに対して `--fixup` オプションを使用して行うことを推奨
   - 別のコミットとしてまとめたい場合は通常のコミットを行う
 
-bash
+```bash
 git add <modified-files>
 git commit --fixup=<commit-hash-of-original-change>
 git push origin <headRefName>
+```
 
 #### 除外すべきコメント:
 - Reply comments (`in_reply_to_id` is not null)
@@ -74,11 +78,12 @@ git push origin <headRefName>
 
 - **Important** 更新をプッシュした後、**必ず** PRの説明を更新し、変更に関連する返信を追加する
 
-bash
+```bash
 gh api --hostname HOSTNAME \
   repos/OWNER/REPO/pulls/NUMBER/comments/COMMENT_ID/replies \
   --method POST \
   -f body="返信内容"
+```
 
 `COMMENT_ID`はコメント取得で得た`id`を使用。
 
