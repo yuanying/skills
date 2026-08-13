@@ -28,6 +28,13 @@ npx skills install github:yuanying/skills
 | [grill-me](skills/grill-me/SKILL.md) | 設計の意思決定を1問ずつ引き出す |
 | [adr-manager](skills/adr-manager/SKILL.md) | 設計決定を ADR として `docs/adr/` に永続化 |
 | [hunk-review](skills/hunk-review/SKILL.md) | hunk を使ったコードレビュー |
+| [show-me](skills/show-me/SKILL.md) | 説明を図・スケッチで見せる（擬似コード・ツリー・Mermaid・diff・HTML） |
+
+### 外部由来のスキル
+
+| スキル | 出典 | ライセンス |
+|--------|------|-----------|
+| show-me | [humanlayer/skills](https://github.com/humanlayer/skills/tree/main/plugins/show-me) v1.0.0 | MIT |
 
 ## grill-me + adr-manager ワークフロー
 
