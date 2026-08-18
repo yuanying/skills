@@ -4,15 +4,17 @@ description: |
   GitHub Pull Request をマージする手順書。マージ方法（merge, squash, rebase）を選択可能。
   トリガー: "pr-merge", "PRマージ", "プルリクエストマージ"
   使用場面: (1) PRのマージ実行、(2) マージ方法の選択、(3) fixupコミット整理後のマージ
+model: sonnet
 ---
 
 # GitHub Pull Request マージ手順
 
 ## 引数の確認
 
-**$ARGUMENTS**: マージ方法を指定（デフォルト: `merge`）
+**$ARGUMENTS**: 対象 PR とマージ方法を指定（順序・個数は任意。両方省略可）
 
-- `merge`: 通常のマージコミットを作成
+- `#14` / `14` のような数値: 対象の PR 番号。省略時は現在のブランチに紐づく PR を対象とする。
+- `merge`（デフォルト）: 通常のマージコミットを作成
 - `squash`: すべてのコミットを1つにまとめてマージ
 - `rebase`: リベースしてマージ
 
@@ -23,12 +25,12 @@ git branch --show-current
 gh pr status
 ```
 
-現在のブランチに関連する PR が存在するか確認する。
+`$ARGUMENTS` に PR 番号があればそれを対象とする。なければ現在のブランチに関連する PR が存在するか確認する。
 
 ## 2. PR の詳細を確認
 
 ```bash
-gh pr view
+gh pr view <PR番号>
 ```
 
 ## 3. fixup コミットの整理（squash）
@@ -57,7 +59,7 @@ git push origin <branch-name> --force-with-lease
 PR のチェックがすべて通過しているか確認する。
 
 ```bash
-gh pr checks
+gh pr checks <PR番号>
 ```
 
 チェックが失敗している場合は、問題を解決してから再度実行する。
@@ -69,9 +71,9 @@ gh pr checks
 
 | 引数 | コマンド |
 |------|----------|
-| `merge`（デフォルト） | `gh pr merge --merge` |
-| `squash` | `gh pr merge --squash` |
-| `rebase` | `gh pr merge --rebase` |
+| `merge`（デフォルト） | `gh pr merge <PR番号> --merge` |
+| `squash` | `gh pr merge <PR番号> --squash` |
+| `rebase` | `gh pr merge <PR番号> --rebase` |
 
 ```bash
 # merge（デフォルト）
@@ -79,7 +81,8 @@ gh pr merge --merge
 # squash
 gh pr merge --squash
 # rebase
-gh pr merge --rebase```
+gh pr merge --rebase
+```
 
 ## 重要
 
