@@ -26,7 +26,7 @@ npx skills install github:yuanying/skills
 | [codex](skills/codex/SKILL.md) | Codex CLI（OpenAI）を使ったコード相談・レビュー |
 | [work-report](skills/work-report/SKILL.md) | 作業セッション後のレポート自動生成 |
 | [grill-me](skills/grill-me/SKILL.md) | 設計の意思決定を1問ずつ引き出す |
-| [adr-manager](skills/adr-manager/SKILL.md) | 設計決定を ADR として `docs/adr/` に永続化 |
+| [adr-manager](skills/adr-manager/SKILL.md) | 設計決定を ADR として `docs/adr/` に永続化し、規約に照らしてレビュー |
 | [hunk-review](skills/hunk-review/SKILL.md) | hunk を使ったコードレビュー |
 | [show-me](skills/show-me/SKILL.md) | 説明を図・スケッチで見せる（擬似コード・ツリー・Mermaid・diff・HTML） |
 
@@ -46,6 +46,7 @@ npx skills install github:yuanying/skills
 
 2. /adr-manager
    → 決定内容を docs/adr/ に ADR として書き出す
+     （書く・書かないの規約 skills/adr-manager/adr-authoring.md で自己点検する）
 
 3. 実装フェーズ
    → Claude Code が ADR を参照しながら実装
