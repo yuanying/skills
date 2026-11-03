@@ -9,9 +9,6 @@ ADR を書く側（`adr-manager` の作成手順）と点検する側（同ス�
 対象は ADR に固有の規約に限る。第三者が後から読むための書き方の一般論
 （一時的なやり取りを残さない、重複を削る、など）は `engineering-writing` スキルに従い、ここには重ねない。
 
-元にした考え方: 「ADR に書くもの・書かないもの」ガイドライン
-（https://zenn.dev/tokium_dev/articles/adr-authoring-guideline）。
-
 ### 強度
 
 | 強度 | 意味 |
