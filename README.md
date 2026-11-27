@@ -14,6 +14,9 @@ npx skills install github:yuanying/skills
 ./scripts/install-skills.sh
 ```
 
+このチェックアウトから削除したスキルのリンクを片付けるには `./scripts/prune-skill-links.sh` を実行します。
+削除対象だけを確認するには `./scripts/prune-skill-links.sh --dry-run` を使います。
+
 ## スキル一覧
 
 | スキル | 説明 |
