@@ -1,6 +1,6 @@
-# Claude Code Skills
+# Agent Skills
 
-[Claude Code](https://claude.ai/code) 用のスキル集です。
+[Pi](https://pi.dev/) や [Claude Code](https://claude.ai/code) で使うスキル集です。
 
 ## インストール
 
@@ -19,11 +19,9 @@ npx skills install github:yuanying/skills
 | スキル | 説明 |
 |--------|------|
 | [git-commit](skills/git-commit/SKILL.md) | コミットメッセージのフォーマットガイドライン |
-| [implement](skills/implement/SKILL.md) | 実装ワークフロー（ブランチ管理・コミット粒度） |
-| [pr-create](skills/pr-create/SKILL.md) | Pull Request の作成手順 |
+| [git-push](skills/git-push/SKILL.md) | push 先のリモートとブランチを明示するためのガイドライン |
+| [poteto-mode](skills/poteto-mode/SKILL.md) | 実装・レビュー・PR のプレイブック集。Pi では `/skill:poteto-mode` で明示的に起動 |
 | [pr-merge](skills/pr-merge/SKILL.md) | Pull Request のマージ手順 |
-| [pr-review-apply](skills/pr-review-apply/SKILL.md) | PR レビューフィードバックの適用 |
-| [codex](skills/codex/SKILL.md) | Codex CLI（OpenAI）を使ったコード相談・レビュー |
 | [work-report](skills/work-report/SKILL.md) | 作業セッション後のレポート自動生成 |
 | [grill-me](skills/grill-me/SKILL.md) | 設計の意思決定を1問ずつ引き出す |
 | [adr-manager](skills/adr-manager/SKILL.md) | 設計決定を ADR として `docs/adr/` に永続化し、規約に照らしてレビュー |
@@ -35,6 +33,7 @@ npx skills install github:yuanying/skills
 | スキル | 出典 | ライセンス |
 |--------|------|-----------|
 | show-me | [humanlayer/skills](https://github.com/humanlayer/skills/tree/main/plugins/show-me) v1.0.0 | MIT |
+| poteto-mode | [pstack](https://github.com/cursor/plugins/tree/b7b93c36be9bcc36a74db438e0fd385d660bc559/pstack) `b7b93c3`（[取り込み範囲](skills/poteto-mode/UPSTREAM.md)） | MIT |
 
 ## grill-me + adr-manager ワークフロー
 
@@ -49,5 +48,5 @@ npx skills install github:yuanying/skills
      （書く・書かないの規約 skills/adr-manager/adr-authoring.md で自己点検する）
 
 3. 実装フェーズ
-   → Claude Code が ADR を参照しながら実装
+   → Pi で /skill:poteto-mode を起動し、ADR を参照しながら実装
 ```
